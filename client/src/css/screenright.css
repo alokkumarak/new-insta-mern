@@ -1,0 +1,83 @@
+.screenright {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+}
+.screenright__top {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.left {
+  display: flex;
+  justify-content: center;
+}
+.left > .MuiAvatar-root {
+  height: 40px !important;
+  width: 40px !important;
+}
+.left_user {
+  margin-left: 15px;
+}
+.username {
+  font-size: 17px;
+  font-weight: 500;
+}
+.password {
+  color: grey;
+}
+.right {
+  color: #39e6ec;
+}
+.screenright__bottom {
+  padding: 10px;
+}
+.suggestion {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.suggestion__left {
+  font-weight: 500;
+  font-size: 17px;
+  color: rgb(90, 90, 90);
+}
+.suggestion__right {
+  font-weight: 500;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  cursor: pointer;
+}
+.follow {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 15px;
+  align-items: center;
+}
+.follow__users {
+  display: flex;
+  align-items: center;
+}
+.follow__users > .MuiAvatar-root {
+  height: 30px !important;
+  width: 30px !important;
+  cursor: pointer;
+}
+.follow__user {
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.follow__username {
+  font-weight: 500;
+  color: #fafafa;
+}
+.follow__password {
+  color: rgb(80, 78, 78);
+  font-size: 13px;
+}
+.follow__right {
+  color: #39e6ec;
+  cursor: pointer;
+}

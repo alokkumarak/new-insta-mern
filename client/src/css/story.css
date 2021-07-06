@@ -1,0 +1,12 @@
+.story > .MuiAvatar-root {
+  height: 60px !important;
+  width: 60px !important;
+  border: 3.5px solid #b92020;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.story__title {
+  text-align: center;
+  font-size: 12px;
+}

@@ -1,0 +1,119 @@
+.signup {
+  background-color: #fafafa;
+}
+.signup__container {
+  /* margin-top: 50px !important; */
+  width: 70%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+.signup__top > img {
+  margin-top: 10px;
+  width: 180px;
+}
+.signup__devider {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+.signup__devider1,
+.signup__devider3 {
+  width: 120px;
+  background-color: #8e8e8e;
+  height: 1px;
+  margin: auto 0;
+}
+.signup__devider2 {
+  font-weight: 600;
+  font-size: 15px;
+  color: #8e8e8e;
+}
+
+.signup__card {
+  max-width: 280px;
+  padding: 40px;
+  border: 0.5px solid rgb(214, 213, 213);
+  background-color: #ffffff;
+}
+.signup__text {
+  color: #8e8e8e;
+  font-size: 17px;
+  font-weight: 600;
+}
+.signup__textField {
+  height: 38px;
+  margin: 2px;
+  border: 0.3px solid #c5c4c4;
+  border-radius: 2px;
+  padding-left: 15px;
+  background-color: #fafafa;
+  font-size: 12px;
+}
+.signup__textField:focus {
+  outline: none;
+  height: 42px;
+}
+.signup__textField:focus::-webkit-input-placeholder {
+  font-size: 0.75em;
+  position: relative;
+  top: -15px;
+  transition: 0.2s ease-in;
+}
+
+.signup__textField::-webkit-input-placeholder {
+  transition: 0.2s ease-in;
+}
+
+.signup__fb {
+  background-color: #0095f6 !important;
+  font-size: 13px !important;
+  width: 270px;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  text-transform: unset !important;
+}
+
+.MuiSvgIcon-root {
+  color: white;
+}
+.signup__form {
+  display: flex;
+  flex-direction: column;
+}
+.signup__image > img {
+  width: 430px;
+  height: 600px;
+}
+
+.signup__small {
+  font-size: 12px;
+  color: #8e8e8e;
+}
+
+.signup__login {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 400px;
+  border: 0.5px solid rgb(214, 213, 213);
+  background-color: #ffffff;
+  font-size: 14px;
+}
+.signup__getapp {
+  display: flex;
+  flex-direction: column;
+}
+.signup__getapp1 {
+  margin-bottom: 15px;
+}
+.signup__getapp2 > img {
+  width: 140px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.signup__getapp2 {
+  margin-bottom: 20px;
+}

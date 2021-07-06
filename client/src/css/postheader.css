@@ -1,0 +1,27 @@
+.postheader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+}
+
+.postheader__left {
+  display: flex;
+  align-items: center;
+}
+.postheader__left > .MuiAvatar-root {
+  width: 35px !important;
+  height: 35px !important;
+  border: 2.5px solid #b92020;
+  cursor: pointer;
+}
+.postheader__name {
+  margin-left: 10px;
+}
+a {
+  color: rgb(201, 196, 192);
+}
+
+.postheader__right {
+  cursor: pointer;
+}

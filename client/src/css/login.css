@@ -1,0 +1,125 @@
+.login {
+  background-color: #080808;
+  color: #fafafa;
+}
+.login__container {
+  margin-top: 50px !important;
+  width: 70%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+.login__top > img {
+  margin-top: 10px;
+  width: 180px;
+}
+.login__devider {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+.login__devider1,
+.login__devider3 {
+  width: 120px;
+  background-color: #8e8e8e;
+  height: 1px;
+  margin: auto 0;
+}
+.login__devider2 {
+  font-weight: 600;
+  font-size: 15px;
+  color: #8e8e8e;
+}
+
+.login__card {
+  max-width: 280px;
+  padding: 40px;
+  border: 0.5px solid rgb(65, 63, 63);
+  background-color: #0a0707;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  border-radius: 5px;
+}
+.login__text {
+  color: #8e8e8e;
+  font-size: 17px;
+  font-weight: 600;
+}
+.login__textField {
+  height: 38px;
+  margin: 2px;
+  border: 0.3px solid #422c2c;
+  border-radius: 2px;
+  padding-left: 15px;
+  background-color: #1d2327;
+  font-size: 12px;
+  color: #39e6ec;
+}
+.login__textField:focus {
+  outline: none;
+  height: 42px;
+}
+.login__textField:focus::-webkit-input-placeholder {
+  font-size: 0.75em;
+  position: relative;
+  top: -15px;
+  transition: 0.2s ease-in;
+}
+
+.login__textField::-webkit-input-placeholder {
+  transition: 0.2s ease-in;
+}
+
+.login__fb {
+  background-color: #1d2327 !important;
+  font-size: 13px !important;
+  width: 270px;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  text-transform: unset !important;
+}
+
+.MuiSvgIcon-root {
+  color: #385185;
+}
+.login__form {
+  display: flex;
+  flex-direction: column;
+}
+.login__image > img {
+  width: 430px;
+  height: 600px;
+}
+
+.login__small {
+  font-size: 12px;
+  color: #8e8e8e;
+}
+
+.login__login {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 400px;
+  border: 0.5px solid #422c2c;
+  background-color: #161515;
+  font-size: 14px;
+  border-radius: 5px;
+}
+.login__getapp {
+  display: flex;
+  flex-direction: column;
+}
+.login__getapp1 {
+  margin-bottom: 15px;
+}
+.login__getapp2 > img {
+  width: 140px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.login__getapp2 {
+  margin-bottom: 20px;
+}
