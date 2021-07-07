@@ -13,8 +13,6 @@ function Home() {
                     <ScreenLeft />
                 </div>
                 <div className="home__screenright"><ScreenRight /></div>
-
-
             </div>
         </div>
     )

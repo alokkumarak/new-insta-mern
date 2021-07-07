@@ -1,0 +1,14 @@
+.highlight > .MuiAvatar-root {
+  height: 75px !important;
+  width: 75px !important;
+  border: 3.5px solid #b39d9d;
+  cursor: pointer;
+  margin-left: 30px;
+}
+
+.highlight__title {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  margin-left: 40px;
+}
