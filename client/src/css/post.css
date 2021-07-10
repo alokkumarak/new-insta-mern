@@ -41,7 +41,7 @@
 }
 @media screen and (max-width: 500px) {
   .post {
-    height: 650px;
+    height: 680px;
     width: 100%;
   }
   .post > img {

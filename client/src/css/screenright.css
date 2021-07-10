@@ -2,6 +2,12 @@
   display: flex;
   flex-direction: column;
   width: 350px;
+  height: auto;
+  margin-left: auto;
+  /* margin-right: 20px; */
+  border: 0.4px solid rgb(114, 114, 114);
+  border-radius: 5px;
+  /* margin-bottom: 20px; */
 }
 .screenright__top {
   padding: 20px;

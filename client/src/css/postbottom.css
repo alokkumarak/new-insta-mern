@@ -21,7 +21,25 @@
   width: 33px !important;
   cursor: pointer;
 }
-
+.addcomment > .MuiPaper-root {
+  display: flex;
+  justify-content: center;
+  align-items: center !important;
+  background: black !important;
+  color: #ffffff !important;
+  border-radius: 999px;
+  width: 360px;
+  margin-left: 200px !important;
+  margin-top: 10px !important;
+  box-shadow: rgba(81, 99, 102, 0.822) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.753) 0px 30px 60px -30px,
+    rgba(73, 70, 38, 0.863) 0px -2px 6px 0px inset !important;
+}
+.commentFiled {
+  color: #fafafa !important;
+  width: 300px;
+  border-radius: 999px;
+}
 .postbottom__iconright > .MuiSvgIcon-root {
   height: 35px !important;
   width: 35px !important;
@@ -56,4 +74,24 @@ b {
 .timestamp {
   font-size: 13px;
   color: rgb(177, 174, 174);
+}
+
+@media screen and (max-width: 1100px) {
+  .addcomment > .MuiPaper-root {
+    margin-left: 100px !important;
+  }
+}
+@media screen and (max-width: 900px) {
+  .addcomment > .MuiPaper-root {
+    margin-left: 35px !important;
+  }
+}
+@media screen and (max-width: 500px) {
+  .addcomment > .MuiPaper-root {
+    margin-left: 20px !important;
+    width: 320px;
+  }
+  .commentFiled {
+    width: 280px;
+  }
 }

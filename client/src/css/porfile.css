@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Festive&display=swap");
+
 .profile__profile {
   color: aliceblue;
   margin-top: 60px !important;
@@ -23,12 +25,15 @@
 .profile__topRight {
   flex: 0.8;
   max-width: 300px;
+  /* font-family: "Mukta", sans-serif; */
+
   /* background-color: greenyellow; */
 }
 .profile__user {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-family: "Poppins", sans-serif;
 }
 .profile__username {
   font-size: 25px;
@@ -48,7 +53,10 @@
   margin-bottom: 5px;
   font-weight: 555;
 }
-
+.profile__bio {
+  font-family: "Festive", cursive;
+  font-size: 15px;
+}
 .profile__highlights {
   display: flex;
   padding: 20px;
@@ -67,9 +75,11 @@
   display: flex;
   max-width: 500px;
   justify-content: center;
+  align-items: center;
   margin: 0 auto;
   margin-top: 5px;
   color: gray;
+  font-family: "STIX Two Math", serif;
 }
 .profile__p {
   display: flex;
@@ -102,6 +112,21 @@
 }
 .profile__s > .MuiSvgIcon-root {
   color: gray;
+}
+.profile__photos {
+  display: flex;
+  flex-wrap: wrap;
+}
+.profile__photo > img {
+  width: 200px;
+  height: 200px;
+  padding: 10px;
+  transition: all 0.5s ease-out;
+  cursor: pointer;
+}
+.profile__photo > img:hover {
+  transform: scale(1.03);
+  opacity: 0.5;
 }
 
 @media screen and (max-width: 1100px) {
@@ -137,17 +162,14 @@
     display: none;
   }
 }
-.profile__photos {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.profile__photos > img {
-  width: 250px;
-  height: 250px;
-  padding: 15px;
-}
 
+@media screen and (max-width: 1300px) {
+  .profile__photos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
 @media screen and (max-width: 470px) {
   .profile__profile {
     margin-top: 55px !important;
@@ -185,6 +207,7 @@
   }
   .profile__bio {
     font-size: 13px;
+    font-family: "Uchen", serif;
   }
   .profile__igtv {
     display: flex;
@@ -220,5 +243,11 @@
   .profile__s > .MuiSvgIcon-root {
     width: 17px !important;
     height: 17px !important;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .profile__photos {
+    justify-content: unset;
   }
 }

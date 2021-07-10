@@ -68,7 +68,7 @@ function Navbar() {
                     <SearchIcon /><input type="text" placeholder="search" />
                 </div>
                 <div className="nav__right">
-                    <HomeIcon />
+                    <Link to="/home"><HomeIcon /></Link>
                     <img src={message_icon} alt="message" />
 
                     <AddBoxOutlinedIcon />

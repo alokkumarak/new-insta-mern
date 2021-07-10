@@ -8,7 +8,6 @@ import GridOnOutlinedIcon from '@material-ui/icons/GridOnOutlined';
 import LiveTvOutlinedIcon from '@material-ui/icons/LiveTvOutlined';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import AccountBoxOutlinedIcon from '@material-ui/icons/AccountBoxOutlined';
-import ProfilePost from './ProfilePost'
 
 const profile = "https://i.pinimg.com/originals/d0/7a/f6/d07af684a67cd52d2f10acd6208db98f.jpg";
 const highlight_img = "https://i.pinimg.com/originals/d0/7a/f6/d07af684a67cd52d2f10acd6208db98f.jpg";
@@ -77,13 +76,30 @@ function Profile() {
                 </div>
 
                 <div className="profile__photos">
-                    <img src={profile} />
-                    <img src={profile} />
-                    <img src={profile} />
-                    <img src={profile} />
-                    <img src={profile} />
-                    <img src={profile} />
-                    <img src={profile} />
+
+                    <div className="profile__photo">
+                        <img src={profile} alt="uploaded" />
+                    </div>
+                    <div className="profile__photo">
+                        <img src={profile} alt="uploaded" />
+                    </div>
+                    <div className="profile__photo">
+                        <img src={profile} alt="uploaded" />
+                    </div>
+                    <div className="profile__photo">
+                        <img src={profile} alt="uploaded" />
+                    </div>
+                    <div className="profile__photo">
+                        <img src={profile} alt="uploaded" />
+                    </div>
+                    <div className="profile__photo">
+                        <img src={profile} alt="uploaded" />
+                    </div>
+                    <div className="profile__photo">
+                        <img src={profile} alt="uploaded" />
+                    </div>
+
+
                 </div>
 
             </div>
