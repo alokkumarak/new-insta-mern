@@ -95,3 +95,8 @@ b {
     width: 280px;
   }
 }
+
+button {
+  background-color: transparent;
+  border: none;
+}

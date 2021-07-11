@@ -1,4 +1,4 @@
-import { AppBar, Avatar } from '@material-ui/core'
+import { AppBar, Avatar, Input } from '@material-ui/core'
 import React from 'react'
 import '../css/navbar.css'
 import SearchIcon from '@material-ui/icons/Search'
@@ -17,6 +17,12 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import SyncIcon from '@material-ui/icons/Sync';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import { Link } from 'react-router-dom'
+import Dialog from '@material-ui/core/Dialog';
+import Slide from '@material-ui/core/Slide';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 function Navbar() {
     const logo = "https://www.edigitalagency.com.au/wp-content/uploads/instagram-logo-white-text-black-background.png"
@@ -25,18 +31,25 @@ function Navbar() {
 
 
     const [open, setOpen] = React.useState(false);
+    const [openabc, setOpenabc] = React.useState(false);
     const anchorRef = React.useRef(null);
+
+    // this is for login drawer
+
 
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
     };
-
+    const handleClickOpen = () => {
+        setOpenabc(true);
+    };
     const handleClose = (event) => {
         if (anchorRef.current && anchorRef.current.contains(event.target)) {
             return;
         }
 
         setOpen(false);
+        setOpenabc(false)
     };
 
     function handleListKeyDown(event) {
@@ -71,7 +84,7 @@ function Navbar() {
                     <Link to="/home"><HomeIcon /></Link>
                     <img src={message_icon} alt="message" />
 
-                    <AddBoxOutlinedIcon />
+                    <AddBoxOutlinedIcon onClick={handleClickOpen} />
                     <FavoriteBorderIcon />
                     <Avatar
                         src={profile}
@@ -81,6 +94,28 @@ function Navbar() {
                         aria-haspopup="true"
                         onClick={handleToggle} />
 
+                    {/* post something  */}
+
+                    <Dialog
+                        open={openabc}
+                        TransitionComponent={Transition}
+                        keepMounted
+                        onClose={handleClose}
+                        aria-labelledby="alert-dialog-slide-title"
+                        aria-describedby="alert-dialog-slide-description"
+                    >
+                        <div className="postpage">
+                            <h1>Instagram</h1>
+
+                            <form className="posthere">
+                                <input type="text" placeholder="some caption here" />
+                                <Input type="file" placeholder="upload image here" style={{ borderBottom: "1px solid rgb(230, 227, 227)" }} />
+                                <button onClick={handleClose}>post</button>
+                            </form>
+                        </div>
+                    </Dialog>
+
+                    {/* avatar list items */}
                     <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
                         {({ TransitionProps, placement }) => (
                             <Grow

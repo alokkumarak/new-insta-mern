@@ -89,7 +89,7 @@ function PostBottom() {
                             <Paper >
                                 <ClickAwayListener onClickAway={handleClose}>
                                     <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                        <Input type="text" className="commentFiled" placeholder="Write a comment here..." required /><SendIcon onClick={handleClose} />
+                                        <form><Input type="text" className="commentFiled" placeholder="Write a comment here..." required /><button><SendIcon onClick={handleClose} /></button></form>
                                     </MenuList>
                                 </ClickAwayListener>
                             </Paper>
