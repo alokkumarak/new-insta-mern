@@ -1,11 +1,90 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../css/signup.css';
 import phoneImage from '../assets/exact-image.png'
 import { Button } from '@material-ui/core';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import FacebookIcon from '@material-ui/icons/Facebook';
+import { useSnackbar } from "notistack"
+import validator from 'validator';
+
+const contain = "Passwords must contain:"
+const lower = "atleast 1 lower case letter [a-z], atleast 1 upper case letter [A-Z]"
+const symbol = "atleast 1 numeric character [0-9] and atleast 1 special character: ~`!@#$%^&*()-_+={}[]|:<>,./?"
 
 function SignUp() {
+    const history = useHistory();
+    const { enqueueSnackbar } = useSnackbar();
+    const [username, setUsername] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
+
+    const signup = () => {
+        //here i'm using proxy to protact backend server
+        if (password.length <= 6) {
+            enqueueSnackbar('password must be atleast 6 character', {
+                variant: 'error',
+            });
+            return
+        }
+
+        if (validator.isStrongPassword(password, {
+            minLength: 6, minLowercase: 1,
+            minUppercase: 1, minNumbers: 1, minSymbols: 1
+        })) {
+
+            fetch("/signup", {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username,
+                    email,
+                    password,
+                    confirmPassword
+                })
+            }).then(res => res.json())
+                .then(signupData => {
+                    if (signupData.error) {
+                        enqueueSnackbar(signupData.error, {
+                            variant: 'error',
+                        });
+                    }
+                    else {
+                        enqueueSnackbar(signupData.message, {
+                            variant: 'success',
+                        });
+                        history.push('/login');
+                        setUsername("");
+                        setEmail("");
+                        setPassword("");
+                        setConfirmPassword("");
+                    }
+                })
+                .catch(error => console.log(error));
+
+        }
+        else {
+
+            enqueueSnackbar(symbol, {
+                variant: 'warning',
+            });
+            enqueueSnackbar(lower, {
+                variant: 'warning',
+            });
+            enqueueSnackbar(contain, {
+                variant: 'error',
+            });
+
+        }
+
+
+
+
+
+    }
+
     const logo = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/840px-Instagram_logo.svg.png"
     return (
         <div className="signup">
@@ -34,11 +113,37 @@ function SignUp() {
                         </div>
                         <div className="signup__bottom">
                             <form className="signup__form">
-                                <input className="signup__textField" type="email" placeholder="Email" />
-                                <input className="signup__textField" type="text" placeholder="Username" />
-                                <input className="signup__textField" type="password" placeholder="Password" />
-                                <input className="signup__textField" type="password" placeholder="Confirm Password" />
-                                <Button className="signup__fb" style={{ marginTop: 15, width: '100%' }}>Sign up</Button>
+                                <input
+                                    className="signup__textField"
+                                    type="email" placeholder="Email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                                <input
+                                    className="signup__textField"
+                                    type="text"
+                                    placeholder="Username"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                />
+                                <input
+                                    className="signup__textField"
+                                    type="password"
+                                    placeholder="Password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                <input
+                                    className="signup__textField"
+                                    type="password"
+                                    placeholder="Confirm Password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                />
+                                <Button
+                                    className="signup__fb"
+                                    style={{ marginTop: 15, width: '100%' }}
+                                    onClick={signup}>Sign up</Button>
 
                             </form>
                             <p className="signup__small">By signing up, you agree to our <b>Terms</b> , <b>Data Policy and Cookies Policy </b>.</p>
@@ -46,7 +151,7 @@ function SignUp() {
                     </div>
 
                     <div className="signup__login">
-                        <p>Have an account? <Link to="/login" style={{ color: '#0095f6' }}>Log in</Link></p>
+                        <p>Have an account? <Link to='/login' style={{ color: '#0095f6' }}>Log in</Link></p>
                     </div>
                     <div className="signup__getapp">
                         <div className="signup__getapp1">

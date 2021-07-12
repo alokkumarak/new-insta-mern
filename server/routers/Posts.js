@@ -1,49 +1,49 @@
-const express=require('express');
-const router=express.Router();
-const mongoose=require('mongoose');
-const Mustsignin =require('../middleWares/requireLogin.js')
-const posts=mongoose.model('posts')
+const express = require('express');
+const router = express.Router();
+const mongoose = require('mongoose');
+const Mustsignin = require('../middleWares/requireLogin.js')
+const posts = mongoose.model('posts')
 
-router.post('/createpost',Mustsignin,(req,res)=>{
-    const {title,body}=req.body
-    if(!title || !body){
-        return res.status(405).json({error:'please add all the fields'});
+router.post('/createpost', Mustsignin, (req, res) => {
+    const { caption, photo } = req.body
+    if (!caption || !photo) {
+        return res.status(405).json({ error: 'please add all the fields' });
     }
-    req.user.password=undefined;
+    req.user.password = undefined;
     const post = new posts({
-        title,
-        body,
-        createdBy:req.user
+        caption,
+        photo,
+        createdBy: req.user
     })
     post.save()
-        .then(result=>{
-            res.json({post:result})
+        .then(result => {
+            res.json({ post: result })
         })
-        .catch(error=>{
+        .catch(error => {
             console.log(error.message);
         })
 })
 
-router.get('/allpost',Mustsignin,(req,res)=>{
+router.get('/allpost', Mustsignin, (req, res) => {
     posts.find()
-       .populate("createdBy","_id username")
-       .then(posts=>{
-           res.json({posts})
-       })
-       .catch(error=>{
-           console.log(error.message);
-       })
+        .populate("createdBy", "_id username")
+        .then(posts => {
+            res.json({ posts })
+        })
+        .catch(error => {
+            console.log(error.message);
+        })
 })
 
-router.get('/mypost',Mustsignin,(req,res)=>{
-    posts.find({createdBy:req.user._id})
-          .populate("createdBy","_id username")
-          .then(mypost=>{
-              res.json({mypost})
-          })
-          .catch(error=>{
-              console.log(error);
-          })
+router.get('/mypost', Mustsignin, (req, res) => {
+    posts.find({ createdBy: req.user._id })
+        .populate("createdBy", "_id username")
+        .then(mypost => {
+            res.json({ mypost })
+        })
+        .catch(error => {
+            console.log(error);
+        })
 })
 
-module.exports=router;
+module.exports = router;

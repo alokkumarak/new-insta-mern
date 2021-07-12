@@ -10,13 +10,14 @@ import Profile from './components/Profile';
 function App() {
 
 
+
   return (
     <Router>
       <Switch>
         <Route exact path="/" ><SignUp /></Route>
-        <Route exact path="/login" ><Login /></Route>
-        <Route exact path="/home" ><Home /></Route>
-        <Route exact path="/profile" ><Profile /></Route>
+        <Route path="/login" ><Login /></Route>
+        <Route path="/home" ><Home /></Route>
+        <Route path="/profile" ><Profile /></Route>
       </Switch>
     </Router>
   );

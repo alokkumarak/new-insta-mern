@@ -1,5 +1,5 @@
 import { AppBar, Avatar, Input } from '@material-ui/core'
-import React from 'react'
+import React, { useState } from 'react'
 import '../css/navbar.css'
 import SearchIcon from '@material-ui/icons/Search'
 import HomeIcon from '@material-ui/icons/Home';
@@ -30,13 +30,36 @@ function Navbar() {
     const profile = "https://i.pinimg.com/originals/d0/7a/f6/d07af684a67cd52d2f10acd6208db98f.jpg";
 
 
-    const [open, setOpen] = React.useState(false);
-    const [openabc, setOpenabc] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [openabc, setOpenabc] = useState(false);
     const anchorRef = React.useRef(null);
+    const [caption, setCaption] = useState("");
+    const [photo, setPhoto] = useState("");
+    const [uri, setUrl] = useState("");
+
+
+    //uploading post 
+    const uploadPost = () => {
+        console.log(photo)
+        const data = new FormData()
+
+        data.append('file', photo);
+        data.append('upload_preset', 'insta-post')
+        data.append('cloud_name', 'dpucwezsk')
+        fetch('https://api.cloudinary.com/v1_1/dpucwezsk', {
+            method: 'post',
+            body: data
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
 
     // this is for login drawer
-
-
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
     };
@@ -108,9 +131,23 @@ function Navbar() {
                             <h1>Instagram</h1>
 
                             <form className="posthere">
-                                <input type="text" placeholder="some caption here" />
-                                <Input type="file" placeholder="upload image here" style={{ borderBottom: "1px solid rgb(230, 227, 227)" }} />
-                                <button onClick={handleClose}>post</button>
+                                {/* <input
+                                    type="text"
+                                    placeholder="some caption here"
+                                    value={caption}
+                                    onChange={(e) => setCaption(e.target.value)}
+                                /> */}
+                                <Input
+                                    type="file"
+                                    placeholder="upload image here"
+                                    style={{ borderBottom: "1px solid rgb(230, 227, 227)" }}
+
+                                    onChange={(e) => setPhoto(e.target.files[0])}
+                                />
+                                <button
+                                    onClick={uploadPost}
+                                >post
+                                </button>
                             </form>
                         </div>
                     </Dialog>

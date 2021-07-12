@@ -1,23 +1,19 @@
-const mongoose =require('mongoose');
-const {ObjectId}=mongoose.Schema.Types;
+const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Schema.Types;
 
-const PostModel=new mongoose.Schema({
-    title:{
-        type:String,
-        required:true
+const PostModel = new mongoose.Schema({
+    caption: {
+        type: String,
+        required: true
     },
-    body:{
-        type:String,
-        required:true
+    photo: {
+        type: String,
+        required: true
     },
-    photo:{
-        type:String,
-        default:'photo uri'
-    },
-    createdBy:{
-        type:ObjectId,
-        ref:'users' 
+    createdBy: {
+        type: ObjectId,
+        ref: 'users'
     }
 })
 
-mongoose.model('posts',PostModel);
+mongoose.model('posts', PostModel);
