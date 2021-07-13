@@ -1,5 +1,5 @@
 import { AppBar, Avatar, Input } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import '../css/navbar.css'
 import SearchIcon from '@material-ui/icons/Search'
 import HomeIcon from '@material-ui/icons/Home';
@@ -20,6 +20,8 @@ import { Link, useHistory } from 'react-router-dom'
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import { useSnackbar } from "notistack"
+import CloseIcon from '@material-ui/icons/Close';
+import { UserContext } from '../App';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -30,6 +32,7 @@ function Navbar() {
     const message_icon = 'https://www.pinclipart.com/picdir/big/392-3928236_robina-campus-facebook-messenger-icon-white-clipart.png'
     const profile = "https://i.pinimg.com/originals/d0/7a/f6/d07af684a67cd52d2f10acd6208db98f.jpg";
     const history = useHistory();
+    const { state, dispatch } = useContext(UserContext);
     const { enqueueSnackbar } = useSnackbar();
     const [open, setOpen] = useState(false);
     const [openabc, setOpenabc] = useState(false);
@@ -41,8 +44,6 @@ function Navbar() {
 
     useEffect(() => {
         if (url) {
-
-
             fetch('/createpost', {
                 method: 'post',
                 headers: {
@@ -73,7 +74,6 @@ function Navbar() {
 
         }
         setCaption("")
-        setPhoto("");
         setOpenabc(false)
 
     }, [url])
@@ -91,10 +91,12 @@ function Navbar() {
             .then(res => res.json())
             .then(data => {
                 setUrl(data.url)
+
             })
             .catch(error => {
                 console.log(error);
             })
+        setPhoto("");
     }
 
     // this is for login drawer
@@ -110,7 +112,7 @@ function Navbar() {
         }
 
         setOpen(false);
-
+        setOpenabc(false)
     };
 
     function handleListKeyDown(event) {
@@ -129,6 +131,15 @@ function Navbar() {
 
         prevOpen.current = open;
     }, [open]);
+
+
+
+    // logout function
+    const logout = () => {
+        localStorage.clear();
+        dispatch({ Type: 'CLEAR' })
+        history.push("/login");
+    }
 
     return (
         <AppBar >
@@ -166,6 +177,7 @@ function Navbar() {
                         aria-describedby="alert-dialog-slide-description"
                     >
                         <div className="postpage">
+                            <CloseIcon onClick={handleClose} />
                             <h1>Instagram</h1>
 
                             <div className="posthere">
@@ -174,11 +186,12 @@ function Navbar() {
                                     placeholder="some caption here"
                                     value={caption}
                                     onChange={(e) => setCaption(e.target.value)}
+                                    required
                                 />
                                 <Input
                                     type="file"
                                     placeholder="upload image here"
-                                    style={{ borderBottom: "1px solid rgb(230, 227, 227)" }}
+                                    style={{ borderBottom: "1px solid rgb(230, 227, 227)", color: '#ffffff' }}
 
                                     onChange={(e) => setPhoto(e.target.files[0])}
                                 />
@@ -206,7 +219,7 @@ function Navbar() {
                                                 <MenuItem onClick={handleClose}><SettingsIcon />&nbsp;&nbsp;&nbsp;Settings</MenuItem>
                                                 <MenuItem onClick={handleClose}><SyncIcon />&nbsp;&nbsp;&nbsp;Switch Account</MenuItem>
                                                 <hr />
-                                                <MenuItem onClick={handleClose}><PowerSettingsNewIcon />&nbsp;&nbsp;&nbsp;Log Out</MenuItem>
+                                                <MenuItem onClick={logout}><PowerSettingsNewIcon />&nbsp;&nbsp;&nbsp;Log Out</MenuItem>
 
 
                                             </MenuList>

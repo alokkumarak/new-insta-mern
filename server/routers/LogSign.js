@@ -69,7 +69,7 @@ router.post('/signin', (req, res) => {
                     if (ifMatchedPassword) {
                         const generateToken = jwt.sign({ _id: presendUser._id }, process.env.JSON_WEB_TOKEN)
 
-                        res.json({ token: generateToken, message: "successfully logged in !!!" });
+                        res.json({ token: generateToken, message: "successfully logged in !!!", user: presendUser });
 
                     }
                     else {

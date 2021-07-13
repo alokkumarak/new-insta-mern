@@ -3,12 +3,12 @@ import PostHeader from './PostHeader'
 import PostBottom from './PostBottom'
 import '../css/post.css';
 
-function Post() {
+function Post({ id, caption, photo, username }) {
     return (
         <div className="post">
-            <PostHeader />
-            <img src="https://i.pinimg.com/originals/d0/7a/f6/d07af684a67cd52d2f10acd6208db98f.jpg" alt="alt" />
-            <PostBottom />
+            <PostHeader username={username} />
+            <img src={photo} alt="alt" />
+            <PostBottom caption={caption} />
         </div>
     )
 }

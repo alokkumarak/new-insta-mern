@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import '../css/login.css';
 import { Button } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom'
 import FacebookIcon from '@material-ui/icons/Facebook';
 import { useSnackbar } from "notistack"
+import { UserContext } from '../App';
 
 function Login() {
+    const { state, dispatch } = useContext(UserContext);
     const logo = "https://www.edigitalagency.com.au/wp-content/uploads/instagram-logo-white-text-black-background.png"
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory()
@@ -37,6 +39,9 @@ function Login() {
                     localStorage.setItem("instaToken", signinData.token);
                     localStorage.setItem("user", JSON.stringify(signinData.user))
 
+                    //dispatch authanticated user
+                    // const userDetail = JSON.stringify();
+                    dispatch({ type: 'USER', payload: signinData.user });
                     history.push('/home');
                     setEmail("");
                     setPassword("");

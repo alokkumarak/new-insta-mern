@@ -13,7 +13,7 @@ import SendIcon from '@material-ui/icons/Send';
 
 const comment_icon = "https://cdn141.picsart.com/328471446044211.png?type=webp&to=min&r=1280"
 
-function PostBottom() {
+function PostBottom({ caption }) {
 
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
@@ -66,12 +66,13 @@ function PostBottom() {
             <div className="postbottom__likes">
                 12,025 likes
             </div>
+            <div><b>Alok Kumar</b> {caption}</div>
             <div className="postbottom__comments">
                 View all 112 comments
             </div>
             <div className="comments">
                 <div><b>Rajan Kumar</b> this is really nice pic.</div>
-                <div><b>Alok Kumar</b> this is really nice pic jjdhjd n fsdfj n nbfds.</div>
+
             </div>
             <div className="timestamp">
                 22 Hours Ago
