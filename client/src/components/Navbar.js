@@ -1,5 +1,5 @@
 import { AppBar, Avatar, Input } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../css/navbar.css'
 import SearchIcon from '@material-ui/icons/Search'
 import HomeIcon from '@material-ui/icons/Home';
@@ -16,9 +16,10 @@ import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutline
 import SettingsIcon from '@material-ui/icons/Settings';
 import SyncIcon from '@material-ui/icons/Sync';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
+import { useSnackbar } from "notistack"
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -28,31 +29,68 @@ function Navbar() {
     const logo = "https://www.edigitalagency.com.au/wp-content/uploads/instagram-logo-white-text-black-background.png"
     const message_icon = 'https://www.pinclipart.com/picdir/big/392-3928236_robina-campus-facebook-messenger-icon-white-clipart.png'
     const profile = "https://i.pinimg.com/originals/d0/7a/f6/d07af684a67cd52d2f10acd6208db98f.jpg";
-
-
+    const history = useHistory();
+    const { enqueueSnackbar } = useSnackbar();
     const [open, setOpen] = useState(false);
     const [openabc, setOpenabc] = useState(false);
     const anchorRef = React.useRef(null);
     const [caption, setCaption] = useState("");
     const [photo, setPhoto] = useState("");
-    const [uri, setUrl] = useState("");
+    const [url, setUrl] = useState("");
 
 
-    //uploading post 
+    useEffect(() => {
+        if (url) {
+
+
+            fetch('/createpost', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('instaToken')
+                },
+                body: JSON.stringify({
+                    caption,
+                    photo: url
+                })
+            }).then(res => res.json())
+                .then(post => {
+                    if (post.error) {
+                        enqueueSnackbar(post.error, {
+                            variant: 'error',
+                        });
+                    }
+                    else {
+                        enqueueSnackbar(post.message, {
+                            variant: 'success',
+                        });
+                        history.push('/home');
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+
+        }
+        setCaption("")
+        setPhoto("");
+        setOpenabc(false)
+
+    }, [url])
+
+    //uploading photo to the cloudinary then useEffect for the post using token becaouse it is a private resourse
     const uploadPost = () => {
-        console.log(photo)
         const data = new FormData()
-
         data.append('file', photo);
         data.append('upload_preset', 'insta-post')
         data.append('cloud_name', 'dpucwezsk')
-        fetch('https://api.cloudinary.com/v1_1/dpucwezsk', {
+        fetch('https://api.cloudinary.com/v1_1/dpucwezsk/image/upload', {
             method: 'post',
             body: data
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
+                setUrl(data.url)
             })
             .catch(error => {
                 console.log(error);
@@ -72,7 +110,7 @@ function Navbar() {
         }
 
         setOpen(false);
-        setOpenabc(false)
+
     };
 
     function handleListKeyDown(event) {
@@ -130,13 +168,13 @@ function Navbar() {
                         <div className="postpage">
                             <h1>Instagram</h1>
 
-                            <form className="posthere">
-                                {/* <input
+                            <div className="posthere">
+                                <input
                                     type="text"
                                     placeholder="some caption here"
                                     value={caption}
                                     onChange={(e) => setCaption(e.target.value)}
-                                /> */}
+                                />
                                 <Input
                                     type="file"
                                     placeholder="upload image here"
@@ -148,7 +186,7 @@ function Navbar() {
                                     onClick={uploadPost}
                                 >post
                                 </button>
-                            </form>
+                            </div>
                         </div>
                     </Dialog>
 

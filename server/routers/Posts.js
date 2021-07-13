@@ -17,7 +17,7 @@ router.post('/createpost', Mustsignin, (req, res) => {
     })
     post.save()
         .then(result => {
-            res.json({ post: result })
+            res.json({ message: 'post created successfully!!!!', post: result })
         })
         .catch(error => {
             console.log(error.message);
