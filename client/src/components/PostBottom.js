@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import '../css/postbottom.css';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import TurnedInNotIcon from '@material-ui/icons/TurnedInNot';
@@ -10,11 +10,16 @@ import MenuList from '@material-ui/core/MenuList';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { Input } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import { UserContext } from '../App';
 
 const comment_icon = "https://cdn141.picsart.com/328471446044211.png?type=webp&to=min&r=1280"
 
-function PostBottom({ caption }) {
-
+function PostBottom({ postedByid, username, caption, likes, completedetail }) {
+    // console.log(completedetail)
+    const { state, dispatch } = useContext(UserContext);
+    // console.log(state)
+    const [like, setLike] = useState([]);
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
 
@@ -47,11 +52,73 @@ function PostBottom({ caption }) {
         prevOpen.current = open;
     }, [open]);
 
+    //like and unlike feature
+
+    const likePost = (id) => {
+
+        fetch('/like', {
+            method: 'put',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('instaToken')
+            },
+            body: JSON.stringify({
+                postId: id
+            })
+        }).then(res => res.json())
+            .then(likes => {
+                const newLike = like.map(likee => {
+                    if (likee._id == likes._id) {
+                        return likes
+                    } else {
+                        return likee
+                    }
+                })
+                setLike(newLike);
+            }).catch(err => {
+                console.log(err);
+            })
+
+    }
+
+
+
+    const unlikePost = (id) => {
+        fetch('/unlike', {
+            method: 'put',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('instaToken')
+            },
+            body: JSON.stringify({
+                postId: id
+            })
+        }).then(res => res.json())
+            .then(unlikes => {
+                const newData = like.map(unlike => {
+                    if (unlike._id == unlikes._id) {
+                        return unlikes
+                    }
+                    else {
+                        return unlike
+                    }
+                })
+                setLike(newData)
+            }).catch(err => console.log(err))
+    }
+
+
     return (
         <div className="postbottom">
             <div className="postbottom__icons">
                 <div className="postbottom__iconleft">
-                    <FavoriteBorderOutlinedIcon />
+                    {
+                        completedetail.likes.includes(state._id)
+                            ? <div className="heart"> <FavoriteIcon onClick={() => unlikePost(completedetail._id)} /></div>
+                            : <FavoriteBorderOutlinedIcon onClick={() => likePost(completedetail._id)} />
+
+                    }
+
                     <img src={comment_icon} alt="comment icon"
                         ref={anchorRef}
                         aria-controls={open ? 'menu-list-grow' : undefined}
@@ -64,9 +131,9 @@ function PostBottom({ caption }) {
                 </div>
             </div>
             <div className="postbottom__likes">
-                12,025 likes
+                {likes} likes
             </div>
-            <div><b>Alok Kumar</b> {caption}</div>
+            <div><b>{username}</b> {caption}</div>
             <div className="postbottom__comments">
                 View all 112 comments
             </div>

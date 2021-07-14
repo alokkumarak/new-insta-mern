@@ -10,6 +10,10 @@ const PostModel = new mongoose.Schema({
         type: String,
         required: true
     },
+    likes: [{
+        type: ObjectId,
+        ref: 'users'
+    }],
     createdBy: {
         type: ObjectId,
         ref: 'users'

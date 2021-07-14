@@ -21,6 +21,12 @@
   width: 33px !important;
   cursor: pointer;
 }
+.heart > .MuiSvgIcon-root {
+  height: 33px !important;
+  width: 33px !important;
+  cursor: pointer;
+  color: red;
+}
 .addcomment > .MuiPaper-root {
   display: flex;
   justify-content: center;

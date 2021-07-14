@@ -46,4 +46,33 @@ router.get('/mypost', Mustsignin, (req, res) => {
         })
 })
 
+router.put('/like', Mustsignin, (req, res) => {
+    // this postId will come from frontend
+    posts.findByIdAndUpdate(req.body.postId, {
+        $push: { likes: req.user._id }
+    }, {
+        new: true
+    }).exec((err, result) => {
+        if (err) {
+            res.status(405).json({ error: err })
+        } else {
+            res.json(result)
+        }
+    })
+})
+
+router.put('/unlike', Mustsignin, (req, res) => {
+    posts.findByIdAndUpdate(req.body.postId, {
+        $pull: { likes: req.user._id }
+    }, {
+        new: true
+    }).exec((err, result) => {
+        if (err) {
+            res.status(405).json({ error: err })
+        } else {
+            res.json(result)
+        }
+    })
+})
+
 module.exports = router;

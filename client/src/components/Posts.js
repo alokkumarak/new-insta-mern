@@ -13,7 +13,7 @@ function Posts() {
             }
         }).then(res => res.json())
             .then(result => {
-                console.log(result.posts)
+                // console.log(result.posts[0].likes)
                 setCompletePost(result.posts);
             })
     }, [])
@@ -24,7 +24,8 @@ function Posts() {
         <div className="posts">
             {
                 completePost.map(post => {
-                    return <Post key={post._id} id={post._id} caption={post.caption} photo={post.photo} username={post.createdBy.username} />
+                    return <Post likes={post.likes.length} key={post._id} id={post._id} caption={post.caption} photo={post.photo} username={post.createdBy.username} completedetail={post} />
+
                 })
             }
             {/* <Post />
