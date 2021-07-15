@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import '../css/postbottom.css';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import TurnedInNotIcon from '@material-ui/icons/TurnedInNot';
@@ -68,7 +68,7 @@ function PostBottom({ postedByid, username, caption, likes, completedetail }) {
         }).then(res => res.json())
             .then(likes => {
                 const newLike = like.map(likee => {
-                    if (likee._id == likes._id) {
+                    if (likee._id === likes._id) {
                         return likes
                     } else {
                         return likee
@@ -96,7 +96,7 @@ function PostBottom({ postedByid, username, caption, likes, completedetail }) {
         }).then(res => res.json())
             .then(unlikes => {
                 const newData = like.map(unlike => {
-                    if (unlike._id == unlikes._id) {
+                    if (unlike._id === unlikes._id) {
                         return unlikes
                     }
                     else {
@@ -107,6 +107,20 @@ function PostBottom({ postedByid, username, caption, likes, completedetail }) {
             }).catch(err => console.log(err))
     }
 
+    // add comment in post
+    const addComment = (text, postId) => {
+        fetch("/comment", {
+            method: "put",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('instaToken')
+            },
+            body: JSON.stringify({
+                postId,
+                text
+            })
+        })
+    }
 
     return (
         <div className="postbottom">
@@ -157,7 +171,10 @@ function PostBottom({ postedByid, username, caption, likes, completedetail }) {
                             <Paper >
                                 <ClickAwayListener onClickAway={handleClose}>
                                     <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                        <form><Input type="text" className="commentFiled" placeholder="Write a comment here..." required /><button><SendIcon onClick={handleClose} /></button></form>
+                                        <form onSubmit={(e) => {
+                                            e.preventDefault()
+                                            addComment(e.target[0].value, postedByid)
+                                        }}><Input type="text" className="commentFiled" placeholder="Write a comment here..." required /><button ><SendIcon onClick={handleClose} /></button></form>
                                     </MenuList>
                                 </ClickAwayListener>
                             </Paper>

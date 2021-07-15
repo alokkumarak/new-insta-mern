@@ -75,4 +75,27 @@ router.put('/unlike', Mustsignin, (req, res) => {
     })
 })
 
+
+router.put('/comment', Mustsignin, (req, res) => {
+    const comment = {
+        text: req.body.text,
+        postedBy: req.user._id
+    }
+    posts.findByIdAndUpdate(req.body.postId, {
+        $push: { comments: comment }
+    }, {
+        new: true
+        // this populate function will find the user details from the database and display
+    }).populate("comments.postedBy", "_id username")
+        .exec((error, result) => {
+            if (error) {
+                res.status(500).json({ error: error })
+            }
+            else {
+                res.json(result)
+            }
+        })
+})
+
+
 module.exports = router;
