@@ -27,6 +27,7 @@ router.post('/createpost', Mustsignin, (req, res) => {
 router.get('/allpost', Mustsignin, (req, res) => {
     posts.find()
         .populate("createdBy", "_id username")
+        .populate("comments.postedBy", "_id username")
         .then(posts => {
             res.json({ posts })
         })
@@ -38,6 +39,7 @@ router.get('/allpost', Mustsignin, (req, res) => {
 router.get('/mypost', Mustsignin, (req, res) => {
     posts.find({ createdBy: req.user._id })
         .populate("createdBy", "_id username")
+
         .then(mypost => {
             res.json({ mypost })
         })
@@ -87,11 +89,13 @@ router.put('/comment', Mustsignin, (req, res) => {
         new: true
         // this populate function will find the user details from the database and display
     }).populate("comments.postedBy", "_id username")
+        .populate("postedBy", "_id username")
         .exec((error, result) => {
             if (error) {
                 res.status(500).json({ error: error })
             }
             else {
+
                 res.json(result)
             }
         })

@@ -8,10 +8,19 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuList from '@material-ui/core/MenuList';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import { Input } from '@material-ui/core';
+import { Avatar, Input } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { UserContext } from '../App';
+import Dialog from '@material-ui/core/Dialog';
+import CloseIcon from '@material-ui/icons/Close';
+import Slide from '@material-ui/core/Slide';
+
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
 
 const comment_icon = "https://cdn141.picsart.com/328471446044211.png?type=webp&to=min&r=1280"
 
@@ -22,6 +31,13 @@ function PostBottom({ postedByid, username, caption, likes, completedetail }) {
     const [like, setLike] = useState([]);
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
+    const [openabc, setOpenabc] = useState(false);
+    const [comment, setComment] = useState("")
+    const [commentShow, setCommentShow] = useState([])
+
+    const handleClickOpen = () => {
+        setOpenabc(true);
+    };
 
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
@@ -31,7 +47,7 @@ function PostBottom({ postedByid, username, caption, likes, completedetail }) {
         if (anchorRef.current && anchorRef.current.contains(event.target)) {
             return;
         }
-
+        setOpenabc(false)
         setOpen(false);
     };
 
@@ -119,7 +135,25 @@ function PostBottom({ postedByid, username, caption, likes, completedetail }) {
                 postId,
                 text
             })
-        })
+        }).then(res => res.json())
+            .then(commentI => {
+                // console.log(commentI);
+                const commentData = commentShow.map(comment => {
+                    if (comment._id === commentI._id) {
+                        return commentI;
+                    } else {
+                        return comment
+                    }
+                })
+                setCommentShow(commentData)
+            }).catch(err => console.log(err))
+    }
+
+
+    // truncate fuction for .. 
+    function truncate(string, n) {
+        return string?.length > n ? string.substr(0, n - 1) + '...' : string;
+
     }
 
     return (
@@ -147,14 +181,11 @@ function PostBottom({ postedByid, username, caption, likes, completedetail }) {
             <div className="postbottom__likes">
                 {likes} likes
             </div>
-            <div><b>{username}</b> {caption}</div>
-            <div className="postbottom__comments">
-                View all 112 comments
+            <div onClick={handleClickOpen}><b>{username}</b> {truncate(`${caption}`, 140)}</div>
+            <div className="postbottom__comments" onClick={handleClickOpen}>
+                View all {completedetail.comments.length} comment
             </div>
-            <div className="comments">
-                <div><b>Rajan Kumar</b> this is really nice pic.</div>
 
-            </div>
             <div className="timestamp">
                 22 Hours Ago
             </div>
@@ -182,6 +213,65 @@ function PostBottom({ postedByid, username, caption, likes, completedetail }) {
                     </Grow>
                 )}
             </Popper>
+
+
+            {/* comment dialog */}
+
+            <Dialog
+                open={openabc}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-slide-title"
+                aria-describedby="alert-dialog-slide-description"
+            >
+                <div className="commentpage">
+                    <CloseIcon onClick={handleClose} />
+                    <div className="comment__header">
+                        <Avatar src="https://images.unsplash.com/photo-1518568740560-333139a27e72?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bG92ZSUyMHN0b3J5fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80" alt="alt" />
+                        <p>name</p>
+                    </div>
+
+                    <div className="commenthere">
+
+                        {
+                            completedetail.comments.map(commentIKJ => {
+                                return (
+                                    <div className="singleComment">
+                                        <div className="commentName">{commentIKJ.postedBy.username}:</div>
+                                        <div className="commentComment">
+                                            {commentIKJ.text}
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+
+                    </div>
+                    <div className="postComment_comment">
+                        <form onSubmit={(e) => {
+                            e.preventDefault()
+                            addComment(e.target[0].value, postedByid)
+                            setComment("");
+                        }}>
+                            <input type="text" placeholder="Write a comment here..." value={comment} onChange={e => setComment(e.target.value)} />
+                            <button ><SendIcon /></button>
+                        </form>
+                    </div>
+                </div>
+            </Dialog>
+
+            {/* caption dialog */}
+            {/* <Dialog
+                open={openabc}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-slide-title"
+                aria-describedby="alert-dialog-slide-description"
+            > <CloseIcon onClick={handleClose} />
+                {caption}
+            </Dialog> */}
 
         </div>
     )

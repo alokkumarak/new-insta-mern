@@ -14,6 +14,7 @@ function Posts() {
         }).then(res => res.json())
             .then(result => {
                 // console.log(result.posts[0].likes)
+                console.log(result.posts);
                 setCompletePost(result.posts);
             })
     }, [])
