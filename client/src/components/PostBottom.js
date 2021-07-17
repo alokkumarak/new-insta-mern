@@ -181,7 +181,7 @@ function PostBottom({ postedByid, username, caption, likes, completedetail }) {
             <div className="postbottom__likes">
                 {likes} likes
             </div>
-            <div onClick={handleClickOpen}><b>{username}</b> {truncate(`${caption}`, 140)}</div>
+            <div onClick={handleClickOpen}><b>{username}</b> {truncate(`${caption}`, 100)}</div>
             <div className="postbottom__comments" onClick={handleClickOpen}>
                 View all {completedetail.comments.length} comment
             </div>
