@@ -251,3 +251,10 @@
     justify-content: unset;
   }
 }
+
+/* other user profile */
+h2 > .MuiSvgIcon-root {
+  width: 50px !important;
+  height: 50px !important;
+  color: brown;
+}

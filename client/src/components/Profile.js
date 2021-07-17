@@ -23,7 +23,7 @@ function Profile() {
             }
         }).then(res => res.json())
             .then(myprofile => {
-                console.log(myprofile.mypost);
+                // console.log(myprofile.mypost);
                 setMypic(myprofile.mypost)
             })
     }, [])
@@ -44,12 +44,12 @@ function Profile() {
                             <div className="profile__setting"><Settings /></div>
                         </div>
                         <div className="profile_posts">
-                            <div className="profile__post">38 posts</div>
+                            <div className="profile__post">{mypic.length} posts</div>
                             <div className="profile__follower">251 followers</div>
                             <div className="profile__followings">163 followings</div>
                         </div>
                         <div className="profile__displayName">
-                            Alok Kumar
+                            {state && state.email}
                         </div>
                         <div className="profile__bio">
                             🤍ᴊᴜsᴛʀᴇᴀᴄᴛᴛʜɪɴɢs🤍<br />
