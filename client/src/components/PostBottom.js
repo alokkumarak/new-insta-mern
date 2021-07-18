@@ -15,6 +15,7 @@ import { UserContext } from '../App';
 import Dialog from '@material-ui/core/Dialog';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
+import { useSnackbar } from 'notistack';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -34,6 +35,9 @@ function PostBottom({ postedByid, username, caption, likes, completedetail }) {
     const [openabc, setOpenabc] = useState(false);
     const [comment, setComment] = useState("")
     const [commentShow, setCommentShow] = useState([])
+    const { enqueueSnackbar } = useSnackbar();
+    // const [likeState, setLikeState] = useState(null);
+
 
     const handleClickOpen = () => {
         setOpenabc(true);
@@ -71,7 +75,7 @@ function PostBottom({ postedByid, username, caption, likes, completedetail }) {
     //like and unlike feature
 
     const likePost = (id) => {
-
+        // e.preventDefault();
         fetch('/like', {
             method: 'put',
             headers: {
@@ -90,11 +94,14 @@ function PostBottom({ postedByid, username, caption, likes, completedetail }) {
                         return likee
                     }
                 })
+                // setLikeState(likes._id);
                 setLike(newLike);
-            }).catch(err => {
+            })
+            .catch(err => {
                 console.log(err);
             })
 
+        window.location.reload(false);
     }
 
 
@@ -120,33 +127,44 @@ function PostBottom({ postedByid, username, caption, likes, completedetail }) {
                     }
                 })
                 setLike(newData)
+                // setLikeState(null);
             }).catch(err => console.log(err))
+        // setLikeState(false);
+        window.location.reload(false);
+
     }
 
     // add comment in post
     const addComment = (text, postId) => {
-        fetch("/comment", {
-            method: "put",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('instaToken')
-            },
-            body: JSON.stringify({
-                postId,
-                text
-            })
-        }).then(res => res.json())
-            .then(commentI => {
-                // console.log(commentI);
-                const commentData = commentShow.map(comment => {
-                    if (comment._id === commentI._id) {
-                        return commentI;
-                    } else {
-                        return comment
-                    }
+        if (!text == "") {
+            fetch("/comment", {
+                method: "put",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('instaToken')
+                },
+                body: JSON.stringify({
+                    postId,
+                    text
                 })
-                setCommentShow(commentData)
-            }).catch(err => console.log(err))
+            }).then(res => res.json())
+                .then(commentI => {
+                    // console.log(commentI);
+                    const commentData = commentShow.map(comment => {
+                        if (comment._id === commentI._id) {
+                            return commentI;
+                        } else {
+                            return comment
+                        }
+                    })
+                    setCommentShow(commentData)
+                }).catch(err => console.log(err))
+        } else {
+            enqueueSnackbar("Please Enter some text to comment", {
+                variant: 'warning',
+            });
+        }
+        window.location.reload(false);
     }
 
 
@@ -158,6 +176,8 @@ function PostBottom({ postedByid, username, caption, likes, completedetail }) {
 
     return (
         <div className="postbottom">
+            {/* {console.log(like.length)} */}
+
             <div className="postbottom__icons">
                 <div className="postbottom__iconleft">
                     {
@@ -229,7 +249,7 @@ function PostBottom({ postedByid, username, caption, likes, completedetail }) {
                     <CloseIcon onClick={handleClose} />
                     <div className="comment__header">
                         <Avatar src="https://images.unsplash.com/photo-1518568740560-333139a27e72?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bG92ZSUyMHN0b3J5fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80" alt="alt" />
-                        <p>name</p>
+                        <p>{username}</p>
                     </div>
 
                     <div className="commenthere">

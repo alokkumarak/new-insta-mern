@@ -71,10 +71,12 @@ function Navbar() {
                 .catch(error => {
                     console.log(error);
                 })
-
+            window.location.reload(false);
+            setCaption("")
+            setOpenabc(false)
         }
-        setCaption("")
-        setOpenabc(false)
+
+
 
     }, [url])
 

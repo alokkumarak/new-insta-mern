@@ -28,6 +28,7 @@ router.get('/allpost', Mustsignin, (req, res) => {
     posts.find()
         .populate("createdBy", "_id username")
         .populate("comments.postedBy", "_id username")
+        .sort("-createdAt")
         .then(posts => {
             res.json({ posts })
         })
@@ -79,6 +80,7 @@ router.put('/unlike', Mustsignin, (req, res) => {
 
 
 router.put('/comment', Mustsignin, (req, res) => {
+    
     const comment = {
         text: req.body.text,
         postedBy: req.user._id

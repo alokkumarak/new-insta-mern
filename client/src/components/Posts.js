@@ -5,6 +5,8 @@ import '../css/posts.css'
 function Posts() {
 
     const [completePost, setCompletePost] = useState([]);
+    const [time, setTime] = useState(true);
+
 
     useEffect(() => {
         fetch('/allpost', {
@@ -16,12 +18,15 @@ function Posts() {
                 // console.log(result.posts[0].likes)
                 // console.log(result.posts);
                 setCompletePost(result.posts);
+                setTimeout(setTime(false), 5000)
+
             })
     }, [])
 
 
 
     return (
+
         <div className="posts">
             {
                 completePost.map(post => {
@@ -29,14 +34,10 @@ function Posts() {
 
                 })
             }
-            {/* <Post />
-            <Post />
-            <Post />
-            <Post />
-            <Post />
-            <Post />
-            <Post /> */}
+
         </div>
+
+
     )
 }
 
