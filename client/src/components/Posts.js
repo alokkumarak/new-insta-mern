@@ -18,7 +18,7 @@ function Posts() {
                 // console.log(result.posts[0].likes)
                 // console.log(result.posts);
                 setCompletePost(result.posts);
-                setTimeout(setTime(false), 5000)
+                // setTimeout(setTime(false), 5000)
 
             })
     }, [])

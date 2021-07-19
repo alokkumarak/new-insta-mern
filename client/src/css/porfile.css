@@ -245,6 +245,9 @@
     height: 17px !important;
   }
 }
+.profile__topLeft > .MuiSvgIcon-root {
+  margin-top: 70px !important;
+}
 
 @media screen and (max-width: 550px) {
   .profile__photos {

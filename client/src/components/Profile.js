@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Navbar from './Navbar'
 import '../css/porfile.css'
-import { Avatar } from '@material-ui/core'
+import { Avatar, Input } from '@material-ui/core'
 import Settings from '@material-ui/icons/Settings'
 import Highlight from './Highlight'
 import GridOnOutlinedIcon from '@material-ui/icons/GridOnOutlined';
@@ -9,12 +9,35 @@ import LiveTvOutlinedIcon from '@material-ui/icons/LiveTvOutlined';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import AccountBoxOutlinedIcon from '@material-ui/icons/AccountBoxOutlined';
 import { UserContext } from '../App'
+import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
+import Dialog from '@material-ui/core/Dialog';
+import Slide from '@material-ui/core/Slide';
+import { useSnackbar } from "notistack"
+import { useHistory } from 'react-router-dom'
+import CloseIcon from '@material-ui/icons/Close';
+
+
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
 
 const profile = "https://i.pinimg.com/originals/d0/7a/f6/d07af684a67cd52d2f10acd6208db98f.jpg";
 const highlight_img = "https://i.pinimg.com/originals/d0/7a/f6/d07af684a67cd52d2f10acd6208db98f.jpg";
 function Profile() {
     const [mypic, setMypic] = useState([]);
     const { state, dispatch } = useContext(UserContext);
+    const [photo, setPhoto] = useState("");
+    const [url, setUrl] = useState("");
+    const [openabc, setOpenabc] = useState(false);
+    const { enqueueSnackbar } = useSnackbar();
+    const anchorRef = React.useRef(null);
+    const [profilePicture, setProfilePicture] = useState([]);
+
+
+
+    const history = useHistory();
 
     useEffect(() => {
         fetch('/mypost', {
@@ -28,14 +51,105 @@ function Profile() {
             })
     }, [])
 
+
+
+    useEffect(() => {
+
+        if (url) {
+            // console.log(url)
+            fetch('/profilepic', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('instaToken')
+                },
+                body: JSON.stringify({
+                    profile: url
+                })
+            }).then(res => res.json())
+                .then(post => {
+                    if (post.error) {
+                        enqueueSnackbar(post.error, {
+                            variant: 'error',
+                        });
+                    }
+                    else {
+                        enqueueSnackbar(post.message, {
+                            variant: 'success',
+                        });
+                        // history.push('/profile');
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+            // window.location.reload(false);
+
+            setOpenabc(false)
+        }
+    }, [url])
+
+    //uploading photo to the cloudinary then useEffect for the post using token becaouse it is a private resourse
+    const uploadprofile = () => {
+        const data = new FormData()
+        data.append('file', photo);
+        data.append('upload_preset', 'insta-post')
+        data.append('cloud_name', 'dpucwezsk')
+        fetch('https://api.cloudinary.com/v1_1/dpucwezsk/image/upload', {
+            method: 'post',
+            body: data
+        })
+            .then(res => res.json())
+            .then(data => {
+                setUrl(data.url)
+
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        setPhoto("");
+    }
+
+    const handleClose = (event) => {
+        if (anchorRef.current && anchorRef.current.contains(event.target)) {
+            return;
+        }
+
+        // setOpen(false);
+        setOpenabc(false)
+    };
+    const handleClickOpen = () => {
+        setOpenabc(true);
+    };
+
+    // show profile pic
+    useEffect(() => {
+        fetch('/myprofilepic', {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("instaToken")
+            }
+        }).then(res => res.json())
+            .then(result => {
+                // console.log(result.posts[0].likes)
+                // console.log(result.posts);
+                console.log(result)
+                setProfilePicture(result.mypost);
+                // setTimeout(setTime(false), 5000)
+
+            })
+    }, [])
+
+
+
     return (
         <div className="profile">
             <Navbar />
-
+            {/* {console.log(profilePicture)} */}
             <div className="profile__profile">
                 <div className="profile__top">
                     <div className="profile__topLeft">
-                        <Avatar src={profile} />
+                        <Avatar src={profilePicture} />
+                        <AddAPhotoIcon onClick={handleClickOpen} />
                     </div>
                     <div className="profile__topRight">
                         <div className="profile__user">
@@ -101,11 +215,38 @@ function Profile() {
                             )
                         })
                     }
-
-
-
-
                 </div>
+
+                {/* upload profile */}
+                <Dialog
+                    open={openabc}
+                    TransitionComponent={Transition}
+                    keepMounted
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-slide-title"
+                    aria-describedby="alert-dialog-slide-description"
+                >
+                    <div className="postpage">
+                        <CloseIcon onClick={handleClose} />
+                        <h1>Instagram</h1>
+
+                        <div className="posthere">
+
+                            <Input
+                                type="file"
+                                placeholder="upload image here"
+                                style={{ borderBottom: "1px solid rgb(230, 227, 227)", color: '#ffffff' }}
+
+                                onChange={(e) => setPhoto(e.target.files[0])}
+                            />
+                            <button
+                                onClick={uploadprofile}
+                            >upload
+                            </button>
+                        </div>
+                    </div>
+                </Dialog>
+
 
             </div>
 

@@ -194,7 +194,6 @@ function Navbar() {
                                     type="file"
                                     placeholder="upload image here"
                                     style={{ borderBottom: "1px solid rgb(230, 227, 227)", color: '#ffffff' }}
-
                                     onChange={(e) => setPhoto(e.target.files[0])}
                                 />
                                 <button
