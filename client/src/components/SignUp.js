@@ -19,7 +19,7 @@ function SignUp() {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [profile, setProfile] = useState("")
-    const [url, setUrl] = useState("")
+    const [url, setUrl] = useState(undefined)
 
     useEffect(() => {
         if (url) {

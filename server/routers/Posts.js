@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Mustsignin = require('../middleWares/requireLogin.js')
 const posts = mongoose.model('posts')
+const User = mongoose.model('users');
 // const profilepics = mongoose.model('profilepic')
 
 router.post('/createpost', Mustsignin, (req, res) => {
@@ -24,6 +25,21 @@ router.post('/createpost', Mustsignin, (req, res) => {
             console.log(error.message);
         })
 })
+
+router.put('/updateprofile', Mustsignin, (req, res) => {
+    User.findByIdAndUpdate(req.user._id,
+        { $set: { profile: req.body.profile } },
+        { new: true },
+        (error, result) => {
+            if (error) {
+                return res.status(422).json({ error: "pic can not updated" });
+            }
+            else {
+                res.json(result)
+            }
+        })
+})
+
 
 // router.post('/profilepic', Mustsignin, (req, res) => {
 //     const { profile } = req.body

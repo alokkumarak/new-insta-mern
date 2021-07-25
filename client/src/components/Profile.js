@@ -28,7 +28,7 @@ const highlight_img = "https://i.pinimg.com/originals/d0/7a/f6/d07af684a67cd52d2
 function Profile() {
     const [mypic, setMypic] = useState([]);
     const { state, dispatch } = useContext(UserContext);
-    const [photo, setPhoto] = useState("");
+    const [updatePhoto, setUpdatePhoto] = useState("");
     const [url, setUrl] = useState("");
     const [openabc, setOpenabc] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
@@ -53,61 +53,84 @@ function Profile() {
 
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (url) {
-            // console.log(url)
-            fetch('/profilepic', {
+    //     if (url) {
+    //         // console.log(url)
+    //         fetch('/profilepic', {
+    //             method: 'post',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': 'Bearer ' + localStorage.getItem('instaToken')
+    //             },
+    //             body: JSON.stringify({
+    //                 profile: url
+    //             })
+    //         }).then(res => res.json())
+    //             .then(post => {
+    //                 if (post.error) {
+    //                     enqueueSnackbar(post.error, {
+    //                         variant: 'error',
+    //                     });
+    //                 }
+    //                 else {
+    //                     enqueueSnackbar(post.message, {
+    //                         variant: 'success',
+    //                     });
+    //                     // history.push('/profile');
+    //                 }
+    //             })
+    //             .catch(error => {
+    //                 console.log(error);
+    //             })
+    //         // window.location.reload(false);
+
+    //         setOpenabc(false)
+    //     }
+    // }, [url])
+
+    //uploading photo to the cloudinary then useEffect for the post using token becaouse it is a private resourse
+    useEffect(() => {
+        if (updatePhoto) {
+            const data = new FormData()
+            data.append('file', updatePhoto);
+            data.append('upload_preset', 'insta-post')
+            data.append('cloud_name', 'dpucwezsk')
+            fetch('https://api.cloudinary.com/v1_1/dpucwezsk/image/upload', {
                 method: 'post',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('instaToken')
-                },
-                body: JSON.stringify({
-                    profile: url
-                })
-            }).then(res => res.json())
-                .then(post => {
-                    if (post.error) {
-                        enqueueSnackbar(post.error, {
-                            variant: 'error',
-                        });
-                    }
-                    else {
-                        enqueueSnackbar(post.message, {
-                            variant: 'success',
-                        });
-                        // history.push('/profile');
-                    }
+                body: data
+            })
+                .then(res => res.json())
+                .then(data => {
+                    // console.log(data);
+                    // setUrl(data.url)
+
+                    fetch('/updateprofile', {
+                        method: 'put',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer " + localStorage.getItem("instaToken")
+                        },
+                        body: JSON.stringify({
+                            profile: data.url
+                        })
+                    }).then(res => res.json())
+                        .then(result => {
+                            console.log(result);
+                            localStorage.setItem("user", JSON.stringify({ ...state, profile: result.profile }));
+                            dispatch({ type: "UPDATEPROFILE", payload: result.profile });
+                        })
                 })
                 .catch(error => {
                     console.log(error);
                 })
-            // window.location.reload(false);
+            setUpdatePhoto("");
 
-            setOpenabc(false)
         }
-    }, [url])
+    }, [updatePhoto])
+    const updateprofile = (file) => {
+        setUpdatePhoto(file)
 
-    //uploading photo to the cloudinary then useEffect for the post using token becaouse it is a private resourse
-    const uploadprofile = () => {
-        const data = new FormData()
-        data.append('file', photo);
-        data.append('upload_preset', 'insta-post')
-        data.append('cloud_name', 'dpucwezsk')
-        fetch('https://api.cloudinary.com/v1_1/dpucwezsk/image/upload', {
-            method: 'post',
-            body: data
-        })
-            .then(res => res.json())
-            .then(data => {
-                setUrl(data.url)
-
-            })
-            .catch(error => {
-                console.log(error);
-            })
-        setPhoto("");
     }
 
     const handleClose = (event) => {
@@ -132,7 +155,7 @@ function Profile() {
             .then(result => {
                 // console.log(result.posts[0].likes)
                 // console.log(result.posts);
-                console.log(result)
+                // console.log(result)
                 setProfilePicture(result.mypost);
                 // setTimeout(setTime(false), 5000)
 
@@ -236,13 +259,13 @@ function Profile() {
                                 type="file"
                                 placeholder="upload image here"
                                 style={{ borderBottom: "1px solid rgb(230, 227, 227)", color: '#ffffff' }}
+                                onChange={(e) => updateprofile(e.target.files[0])}
 
-                                onChange={(e) => setPhoto(e.target.files[0])}
                             />
-                            <button
-                                onClick={uploadprofile}
+                            {/* <button
+                                onClick={updateprofile}
                             >upload
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                 </Dialog>
