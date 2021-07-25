@@ -161,7 +161,7 @@ function Navbar() {
                     <AddBoxOutlinedIcon onClick={handleClickOpen} />
                     <FavoriteBorderIcon />
                     <Avatar
-                        src={profile}
+                        src={state ? state.profile : profile}
                         alt="profile"
                         ref={anchorRef}
                         aria-controls={open ? 'menu-list-grow' : undefined}

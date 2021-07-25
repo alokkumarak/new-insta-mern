@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 require('./models/UserModel.js');
 require('./models/PostModel.js')
-require('./models/ProfileModel.js')
+// require('./models/ProfileModel.js')
 
 app.use(express.json())
 app.use(require('./routers/LogSign'));

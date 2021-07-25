@@ -41,7 +41,7 @@ function Profile() {
                 usersProfile && usersProfilePic ? <div className="profile__profile">
                     <div className="profile__top">
                         <div className="profile__topLeft">
-                            <Avatar src={profile} />
+                            <Avatar src={usersProfile.profile} />
                         </div>
                         <div className="profile__topRight">
                             <div className="profile__user">

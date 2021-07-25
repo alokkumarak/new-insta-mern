@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../css/signup.css';
 import phoneImage from '../assets/exact-image.png'
-import { Button } from '@material-ui/core';
+import { Button, Input } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom'
 import FacebookIcon from '@material-ui/icons/Facebook';
 import { useSnackbar } from "notistack"
@@ -18,9 +18,36 @@ function SignUp() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
+    const [profile, setProfile] = useState("")
+    const [url, setUrl] = useState("")
 
-    const signup = () => {
-        //here i'm using proxy to protact backend server
+    useEffect(() => {
+        if (url) {
+            uploadData();
+        }
+    }, [url])
+
+    const uploadProfile = () => {
+        const data = new FormData()
+        data.append('file', profile);
+        data.append('upload_preset', 'insta-post')
+        data.append('cloud_name', 'dpucwezsk')
+        fetch('https://api.cloudinary.com/v1_1/dpucwezsk/image/upload', {
+            method: 'post',
+            body: data
+        })
+            .then(res => res.json())
+            .then(data => {
+                setUrl(data.url)
+
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        setProfile("");
+    }
+
+    const uploadData = () => {
         if (password.length <= 6) {
             enqueueSnackbar('password must be atleast 6 character', {
                 variant: 'error',
@@ -42,7 +69,8 @@ function SignUp() {
                     username,
                     email,
                     password,
-                    confirmPassword
+                    confirmPassword,
+                    profile: url
                 })
             }).then(res => res.json())
                 .then(signupData => {
@@ -79,9 +107,16 @@ function SignUp() {
 
         }
 
+    }
 
-
-
+    const signup = () => {
+        //here i'm using proxy to protact backend server
+        if (profile) {
+            uploadProfile();
+        }
+        else {
+            uploadData();
+        }
 
     }
 
@@ -139,6 +174,13 @@ function SignUp() {
                                     placeholder="Confirm Password"
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
+                                />
+                                <Input
+                                    type="file"
+                                    placeholder="upload image here"
+                                    style={{ borderBottom: "1px solid rgb(230, 227, 227)", color: '#ffffff' }}
+                                    onChange={(e) => setProfile(e.target.files[0])}
+                                    target="upload profile pic"
                                 />
                                 <Button
                                     className="signup__fb"

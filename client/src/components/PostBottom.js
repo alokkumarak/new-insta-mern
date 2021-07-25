@@ -25,7 +25,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const comment_icon = "https://cdn141.picsart.com/328471446044211.png?type=webp&to=min&r=1280"
 
-function PostBottom({ postedByid, username, caption, likes, completedetail }) {
+function PostBottom({ topImage, postedByid, username, caption, likes, completedetail }) {
     // console.log(completedetail)
     const { state, dispatch } = useContext(UserContext);
     // console.log(state)
@@ -248,7 +248,7 @@ function PostBottom({ postedByid, username, caption, likes, completedetail }) {
                 <div className="commentpage">
                     <CloseIcon onClick={handleClose} />
                     <div className="comment__header">
-                        <Avatar src="https://images.unsplash.com/photo-1518568740560-333139a27e72?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bG92ZSUyMHN0b3J5fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80" alt="alt" />
+                        <Avatar src={topImage} alt="alt" />
                         <p>{username}</p>
                     </div>
 

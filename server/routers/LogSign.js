@@ -17,7 +17,7 @@ router.get("/mustsignin", Mustsignin, (req, res) => {
 
 
 router.post('/signup', (req, res) => {
-    const { username, email, password, confirmPassword } = req.body;
+    const { username, email, password, confirmPassword, profile } = req.body;
 
     if (!username || !email || !password || !confirmPassword) {
         return res.status(405).json({ error: "fill all the required field!!" });
@@ -35,7 +35,8 @@ router.post('/signup', (req, res) => {
                     const user = new users({
                         email,
                         username,
-                        password: hashedPassword
+                        password: hashedPassword,
+                        profile
                     })
                     user.save()
                         .then(user => {
@@ -68,8 +69,8 @@ router.post('/signin', (req, res) => {
                 .then(ifMatchedPassword => {
                     if (ifMatchedPassword) {
                         const generateToken = jwt.sign({ _id: presendUser._id }, process.env.JSON_WEB_TOKEN)
-
-                        res.json({ token: generateToken, message: "successfully logged in !!!", user: presendUser });
+                        const { _id, username, profile } = presendUser;
+                        res.json({ token: generateToken, message: "successfully logged in !!!", user: { _id, username, profile } });
 
                     }
                     else {

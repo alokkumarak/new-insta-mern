@@ -148,7 +148,7 @@ function Profile() {
             <div className="profile__profile">
                 <div className="profile__top">
                     <div className="profile__topLeft">
-                        <Avatar src={profilePicture} />
+                        <Avatar src={state ? state.profile : "loading.."} />
                         <AddAPhotoIcon onClick={handleClickOpen} />
                     </div>
                     <div className="profile__topRight">
