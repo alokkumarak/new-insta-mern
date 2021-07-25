@@ -1,4 +1,4 @@
-
+// api_key_sendGrid=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
 const express = require('express');
 
 const router = express.Router();
@@ -6,6 +6,15 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const nodemailer = require("nodemailer")
+const sendGrid = require("nodemailer-sendgrid-transport");
+
+// initialise user with email
+const transport = nodemailer.createTransport(sendGrid({
+    auth: {
+        api_key: "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"
+    }
+}))
 
 //call the user model "users" to create database user
 const users = mongoose.model('users');
@@ -40,6 +49,14 @@ router.post('/signup', (req, res) => {
                     })
                     user.save()
                         .then(user => {
+                            // now send mail when user is successfully signedup
+                            // console.log(user.email)
+                            transport.sendMail({
+                                to: user.email,
+                                from: "alok.sonaili@gmail.com",
+                                subject: "successfully registered with Instagram",
+                                html: "<h1>Successfully signed up with instagram......</h1>"
+                            })
                             res.json({ message: "successfully registered with Instagram" });
                         }).catch(error => {
                             console.log(error.message);
