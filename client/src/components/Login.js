@@ -83,7 +83,7 @@ function Login() {
                                     style={{ marginTop: 15, width: '100%' }}
                                     onClick={login}
                                 >
-                                    Sign up
+                                    Sign in
                                 </Button>
 
                             </form>

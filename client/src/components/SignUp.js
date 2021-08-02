@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '../css/signup.css';
-import phoneImage from '../assets/exact-image.png'
+import phoneImage from '../assets/exact-image-removebg-preview.png'
 import { Button, Input } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom'
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -120,7 +120,7 @@ function SignUp() {
 
     }
 
-    const logo = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/840px-Instagram_logo.svg.png"
+    const logo = "https://www.edigitalagency.com.au/wp-content/uploads/instagram-logo-white-text-black-background.png"
     return (
         <div className="signup">
             <div className='signup__container'>
