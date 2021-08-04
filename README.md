@@ -42,15 +42,40 @@ npm start
 ```
 ## screenshots
 <h5>signup page</h5>
+
+
 ![signup page](https://res.cloudinary.com/dpucwezsk/image/upload/v1628018997/Screenshot_from_2021-08-04_00-48-20_zuivr6.png)
 
 
+<h5>Login Page</h5>
+
+
+![login page](https://res.cloudinary.com/dpucwezsk/image/upload/v1628019003/Screenshot_from_2021-08-04_00-50-01_b6icgq.png)
+
+
+<h5>Home page</h5>
+
+
+![home page](https://res.cloudinary.com/dpucwezsk/image/upload/v1628019026/Screenshot_from_2021-08-04_00-51-18_qghosg.png)
+
+
+<h5>post Somemthing</h5>
+
+
+![home page](https://res.cloudinary.com/dpucwezsk/image/upload/v1628019031/Screenshot_from_2021-08-04_00-51-25_x3wsoz.png)
+
+
+
+<h5>Profile</h5>
+
+
+![home page](https://res.cloudinary.com/dpucwezsk/image/upload/v1628019035/Screenshot_from_2021-08-04_00-51-39_b8ha6h.png)
 
 ## Author
 
 👤 **alok kumar**
 
-* Github: [@https:\/\/github.com\/alokkumarak\/new-insta-mern](https://github.com/https:\/\/github.com\/alokkumarak\/new-insta-mern)
+* Github: [@https:\/\/github.com\/alokkumarak](https://github.com/https:\/\/github.com\/alokkumarak)
 
 ## Show your support
 
