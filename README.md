@@ -75,7 +75,7 @@ npm start
 
 👤 **alok kumar**
 
-* Github: [@https:\/\/github.com\/alokkumarak](https://github.com/https:\/\/github.com\/alokkumarak)
+* Github: [@https:\/\/github.com\/alokkumarak](https://github.com/alokkumarak)
 
 ## Show your support
 
