@@ -42,7 +42,7 @@ npm start
 ```
 ## screenshots
 <h5>signup page</h5>
-![signup page](https://res.cloudinary.com/dpucwezsk/image/upload/v1628018997/Screenshot_from_2021-08-04_00-48-20_zuivr6.png "Description goes here")
+![signup page](https://res.cloudinary.com/dpucwezsk/image/upload/v1628018997/Screenshot_from_2021-08-04_00-48-20_zuivr6.png)
 
 
 
